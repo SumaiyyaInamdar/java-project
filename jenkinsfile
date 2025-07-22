@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven 3.9.5'   // adjust to your installed Maven name
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/YOUR_USER/simple-java-app.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Run') {
+            steps {
+                sh 'java -cp target/classes com.example.HelloWorld'
+            }
+        }
+    }
+}
