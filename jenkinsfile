@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.6.3'
+        maven 'Maven 3.6.3'   // adjust to your installed Maven name
     }
 
     stages {
@@ -18,23 +18,10 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Run') {
             steps {
-                sh 'mvn test'
+                sh 'java -cp target/classes com.example.HelloWorld'
             }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh 'pkill -f "java -jar" || true'
-                sh 'nohup java -jar target/yourapp.jar > app.log 2>&1 &'
-            }
-        }
-    }
-
-    post {
-        always {
-            sh 'tail -n 20 app.log || true'
         }
     }
 }
